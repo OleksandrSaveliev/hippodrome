@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug" name="hippodrome">
+    <Appenders>
+        <RollingFile
+                name="RollingFile"
+                fileName="logs/hippodrome.log"
+                filePattern="logs/$${date:yyyy-MM}/hippodrome-%d{-dd-MMMM-yyyy}-%i.log.gz"
+        >
+            <PatternLayout>
+                <pattern>%d %p %C{1.} [%t] %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10">
+                <Delete basePath="logs/" maxDepth="2">
+                    <IfFileName glob="*/hippodrome-*.log.gz" />
+                    <IfLastModified age="1d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="all">
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
